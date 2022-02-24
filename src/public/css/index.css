@@ -1,0 +1,96 @@
+* {
+  box-sizing: border-box;
+  border-radius: 15px;
+  border: none;
+}
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+form > input {
+  margin-bottom: 10px;
+}
+button,
+input {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+li {
+  text-decoration: none;
+  list-style: none;
+}
+body {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background-color: #6a89cc;
+}
+main {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#call {
+  width: 100%;
+}
+#myStream {
+  height: 100vh;
+}
+#videos {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+#btns {
+  width: 50%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-around;
+}
+#btns button {
+  padding: 10px;
+  background-color: white;
+  border: none;
+}
+
+#chatBox {
+  width: 100%;
+  height: 250px;
+  overflow: auto;
+  background-color: #3c6382;
+  border-radius: 15px;
+  margin: 20px 0;
+}
+#chatting {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#chat {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 10px;
+}
+#chat li {
+  margin: 2px 0;
+}
+.opMessage {
+  background-color: gray;
+  padding: 10px;
+  align-self: flex-start;
+  max-width: 40%;
+  word-break: break-all;
+}
+
+.myMessage {
+  background-color: yellow;
+  padding: 10px;
+  align-self: flex-end;
+  max-width: 40%;
+  word-break: break-all;
+}

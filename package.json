@@ -1,0 +1,35 @@
+{
+  "name": "webrtc",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "start" : "node build/server.js",
+    "build": "npm run build:server && npm run build:assets",
+    "dev:server": "nodemon",
+    "dev:assets": "webpack --mode=development --watch",
+    "build:assets": "webpack --mode=production",
+    "build:server": "babel src -d build"
+  },
+  "dependencies": {
+    "@socket.io/admin-ui": "^0.2.0",
+    "express": "^4.17.2",
+    "localtunnel": "^2.0.2",
+    "pug": "^3.0.2",
+    "regenerator-runtime": "^0.13.9",
+    "socket.io": "^4.4.1",
+    "ws": "^8.4.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.16.8",
+    "@babel/core": "^7.16.12",
+    "@babel/node": "^7.16.8",
+    "@babel/preset-env": "^7.16.11",
+    "babel-loader": "^8.2.3",
+    "css-loader": "^6.6.0",
+    "mini-css-extract-plugin": "^2.5.3",
+    "nodemon": "^2.0.15",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.69.1",
+    "webpack-cli": "^4.9.2"
+  }
+}

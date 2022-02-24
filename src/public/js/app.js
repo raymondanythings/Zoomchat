@@ -97,6 +97,22 @@ camerasSelect.addEventListener("input", handleCameraChange);
 
 const welcome = document.getElementById("welcome");
 const welcomeForm = welcome.querySelector("form");
+const h3 = welcome.querySelector("h3");
+
+h3.hidden = true;
+socket.on("room_change", (rooms) => {
+  if (rooms.length !== 0) {
+    h3.hidden = false;
+  }
+  const roomList = welcome.querySelector("ul");
+  roomList.innerText = "";
+  rooms.forEach((room) => {
+    const li = document.createElement("li");
+    li.innerText = room;
+    li.addEventListener("click", handleLiClick);
+    roomList.appendChild(li);
+  });
+});
 
 async function initCall() {
   welcome.hidden = true;
@@ -105,17 +121,28 @@ async function initCall() {
   makeConnection();
 }
 
+function joinRoom(input) {
+  const title = document.querySelector("main h1");
+  socket.emit("join_room", input);
+  roomName = input;
+  title.innerText = `ROOM: ${roomName}`;
+  document.title = `${roomName} | Noom`;
+}
+
 async function handleWelcomeSubmit(e) {
   e.preventDefault();
   const input = welcomeForm.querySelector("input");
   await initCall();
-  const title = document.querySelector("main h1");
-  socket.emit("join_room", input.value);
-  roomName = input.value;
-  title.innerText = `ROOM: ${roomName}`;
-  document.title = `${roomName} | Noom`;
+  joinRoom(input.value);
   input.value = "";
 }
+
+async function handleLiClick(e) {
+  const input = e.target.innerText;
+  await initCall();
+  joinRoom(input);
+}
+
 const chatForm = call.querySelector("form");
 chatForm.addEventListener("submit", handleChatSubmit);
 function handleChatSubmit(e) {

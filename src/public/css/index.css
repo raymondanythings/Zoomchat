@@ -46,7 +46,7 @@ main {
   justify-content: space-between;
 }
 #btns {
-  width: 50%;
+  padding: 0px 20%;
   margin: 0 auto;
   display: flex;
   justify-content: space-around;
@@ -93,4 +93,24 @@ main {
   align-self: flex-end;
   max-width: 40%;
   word-break: break-all;
+}
+
+#welcome h3,
+#welcome ul,
+#welcome ul li {
+  text-align: center;
+  padding: 0;
+}
+
+#welcome ul li {
+  cursor: pointer;
+  color: white;
+  border: 1px solid;
+  font-weight: 500;
+  background-color: inherit;
+  transition: all 0.3s ease-in-out;
+}
+#welcome ul li:hover {
+  background-color: white;
+  color: black;
 }

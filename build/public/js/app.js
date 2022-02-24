@@ -192,6 +192,22 @@ camerasSelect.addEventListener("input", handleCameraChange); // Welcome Form ( J
 
 var welcome = document.getElementById("welcome");
 var welcomeForm = welcome.querySelector("form");
+var h3 = welcome.querySelector("h3");
+h3.hidden = true;
+socket.on("room_change", function (rooms) {
+  if (rooms.length !== 0) {
+    h3.hidden = false;
+  }
+
+  var roomList = welcome.querySelector("ul");
+  roomList.innerText = "";
+  rooms.forEach(function (room) {
+    var li = document.createElement("li");
+    li.innerText = room;
+    li.addEventListener("click", handleLiClick);
+    roomList.appendChild(li);
+  });
+});
 
 function initCall() {
   return _initCall.apply(this, arguments);
@@ -221,13 +237,22 @@ function _initCall() {
   return _initCall.apply(this, arguments);
 }
 
+function joinRoom(input) {
+  var title = document.querySelector("main h1");
+  socket.emit("join_room", input);
+  roomName = input;
+  title.innerText = "ROOM: ".concat(roomName);
+  document.title = "".concat(roomName, " | Noom");
+  input.value = "";
+}
+
 function handleWelcomeSubmit(_x2) {
   return _handleWelcomeSubmit.apply(this, arguments);
 }
 
 function _handleWelcomeSubmit() {
   _handleWelcomeSubmit = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime["default"].mark(function _callee7(e) {
-    var input, title;
+    var input;
     return _regeneratorRuntime["default"].wrap(function _callee7$(_context7) {
       while (1) {
         switch (_context7.prev = _context7.next) {
@@ -238,14 +263,10 @@ function _handleWelcomeSubmit() {
             return initCall();
 
           case 4:
-            title = document.querySelector("main h1");
-            socket.emit("join_room", input.value);
-            roomName = input.value;
-            title.innerText = "ROOM: ".concat(roomName);
-            document.title = "".concat(roomName, " | Noom");
+            joinRoom(input.value);
             input.value = "";
 
-          case 10:
+          case 6:
           case "end":
             return _context7.stop();
         }
@@ -253,6 +274,34 @@ function _handleWelcomeSubmit() {
     }, _callee7);
   }));
   return _handleWelcomeSubmit.apply(this, arguments);
+}
+
+function handleLiClick(_x3) {
+  return _handleLiClick.apply(this, arguments);
+}
+
+function _handleLiClick() {
+  _handleLiClick = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime["default"].mark(function _callee8(e) {
+    var input;
+    return _regeneratorRuntime["default"].wrap(function _callee8$(_context8) {
+      while (1) {
+        switch (_context8.prev = _context8.next) {
+          case 0:
+            input = e.target.innerText;
+            _context8.next = 3;
+            return initCall();
+
+          case 3:
+            joinRoom(input);
+
+          case 4:
+          case "end":
+            return _context8.stop();
+        }
+      }
+    }, _callee8);
+  }));
+  return _handleLiClick.apply(this, arguments);
 }
 
 var chatForm = call.querySelector("form");
@@ -337,7 +386,7 @@ socket.on("offer", /*#__PURE__*/function () {
     }, _callee2);
   }));
 
-  return function (_x3) {
+  return function (_x4) {
     return _ref2.apply(this, arguments);
   };
 }());

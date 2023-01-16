@@ -1,0 +1,11 @@
+name: zoomchat
+app: node@16
+options:
+  env:
+    - name: NODE_ENV
+      value: production
+  ports: 3000
+context:
+  git:
+    url: https://github.com/raymondanythings/Zoomchat.git
+    branch: master

@@ -1,3 +1,5 @@
+"use strict";
+
 import regeneratorRuntime from "regenerator-runtime";
 import "../css/index.css";
 
@@ -7,7 +9,7 @@ const muteBtn = document.getElementById("mute");
 const cameraBtn = document.getElementById("camera");
 const camerasSelect = document.getElementById("cameras");
 const chatBox = document.getElementById("chat");
-
+const startButton = document.getElementById("share");
 const chatting = document.getElementById("chatting");
 const call = document.getElementById("call");
 
@@ -166,6 +168,21 @@ function makeMessage(event) {
   chatBox.appendChild(message);
 }
 
+function handleSuccess(stream) {
+  startButton.disabled = true;
+  // preferredDisplaySurface.disabled = true;
+  const video = document.querySelector("video");
+  myFace.srcObject = stream;
+
+  // demonstrates how to detect that the user has stopped
+  // sharing the screen via the browser UI.
+  stream.getVideoTracks()[0].addEventListener("ended", () => {
+    errorMsg("The user has ended sharing the screen");
+    startButton.disabled = false;
+    // preferredDisplaySurface.disabled = false;
+  });
+}
+
 // Socket Code
 
 socket.on("welcome", async () => {
@@ -234,4 +251,26 @@ function handleIce(data) {
 function handleAddStream(data) {
   const peersStream = document.getElementById("peerFace");
   peersStream.srcObject = data.streams[0];
+}
+
+startButton.addEventListener("click", () => {
+  const options = { audio: true, video: true };
+  // const displaySurface =
+  //   preferredDisplaySurface.options[preferredDisplaySurface.selectedIndex]
+  //     .value;
+  // if (displaySurface !== "default") {
+  //   options.video = { displaySurface };
+  // }
+  navigator.mediaDevices
+    .getDisplayMedia(options)
+    .then(handleSuccess, handleError);
+});
+
+if (navigator.mediaDevices && "getDisplayMedia" in navigator.mediaDevices) {
+  startButton.disabled = false;
+} else {
+  errorMsg("getDisplayMedia is not supported");
+}
+function handleError(error) {
+  console.error(`getDisplayMedia error: ${error.name}`, error);
 }

@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "noImplicitAny": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "sourceMap": true,
+    "isolatedModules": true, 
+    "strict": true,                           /* 모든 엄격한 유형 검사 옵션 활성화 */
+    "strictNullChecks": true,              /* 엄격한 null 검사 사용 */
+    "strictFunctionTypes": true,           /* 엄격한 함수 유형 검사 사용 */
+    "strictBindCallApply": true,           /* 엄격한 'bind', 'call', 'apply' 함수 메서드 사용 */
+    "strictPropertyInitialization": true,  /* 클래스에서 속성 초기화 엄격 검사 사용 */
+    "alwaysStrict": true,                  /* 엄격모드에서 구문 분석 후, 각 소스 파일에 "use strict" 코드를 출력 */
+    "esModuleInterop": true,
+    "outDir": "./dist"
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
+}

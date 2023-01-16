@@ -1,5 +1,5 @@
-import http from "http";
-import SocketIO from "socket.io";
+import * as http from "http";
+import { Server } from "socket.io";
 import express from "express";
 
 const app = express();
@@ -13,7 +13,7 @@ app.get("/", (_, res) => res.render("home"));
 app.get("/*", (_, res) => res.redirect("/"));
 
 const httpServer = http.createServer(app);
-const wsServer = SocketIO(httpServer);
+const wsServer = new Server(httpServer);
 
 function publicRooms() {
   const {
@@ -21,7 +21,7 @@ function publicRooms() {
       adapter: { sids, rooms },
     },
   } = wsServer;
-  const publicRooms = [];
+  const publicRooms: string[] = [];
   rooms.forEach((_, key) => {
     if (sids.get(key) === undefined) {
       publicRooms.push(key);
@@ -49,6 +49,8 @@ wsServer.on("connection", (socket) => {
     wsServer.sockets.emit("room_change", publicRooms());
   });
 });
+
+console.log("OK");
 
 const handleListen = () => console.log(`Listening on http://localhost:3000`);
 httpServer.listen(PORT, handleListen);

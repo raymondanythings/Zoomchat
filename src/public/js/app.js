@@ -168,11 +168,18 @@ function makeMessage(event) {
   chatBox.appendChild(message);
 }
 
-function handleSuccess(stream) {
-  startButton.disabled = true;
-  // preferredDisplaySurface.disabled = true;
-  const video = document.querySelector("video");
-  myFace.srcObject = stream;
+async function handleSuccess(stream) {
+  if (myPeerConnection) {
+    const videoTrack = stream.getVideoTracks()[0];
+    console.log(videoTrack);
+    const videoSender = myPeerConnection
+      .getSenders()
+      .find((sender) => sender.track.kind === "video");
+    videoSender.replaceTrack(videoTrack);
+
+    startButton.disabled = true;
+    myFace.srcObject = stream;
+  }
 
   // demonstrates how to detect that the user has stopped
   // sharing the screen via the browser UI.
@@ -238,6 +245,7 @@ function makeConnection() {
   });
   myPeerConnection.addEventListener("icecandidate", handleIce);
   myPeerConnection.addEventListener("track", handleAddStream);
+  console.log(myStream.getTracks());
   myStream
     .getTracks()
     .forEach((track) => myPeerConnection.addTrack(track, myStream));
